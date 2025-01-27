@@ -1,0 +1,7 @@
+[project]
+name = "repo2llm"
+version = "0.1.0"
+description = "Convert a repository into a single text file to be fed into a language model"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
