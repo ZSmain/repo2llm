@@ -5,3 +5,10 @@ description = "Convert a repository into a single text file to be fed into a lan
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.scripts]
+repo2llm = "repo2llm:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,6 +1,9 @@
 import os
+import argparse
+from pathlib import Path
 
-def consolidate_files(repo_path, output_file, exclude_dirs=None, include_extensions=None):
+def consolidate_files(repo_path: str, output_file: str, exclude_dirs: list[str] | None = None, 
+                     include_extensions: list[str] | None = None) -> None:
     """
     Consolidates all files in a repository into a single text file.
     
@@ -29,11 +32,27 @@ def consolidate_files(repo_path, output_file, exclude_dirs=None, include_extensi
                     except Exception as e:
                         print(f"Could not read file {file_path}: {e}")
 
-if __name__ == "__main__":
-    # Path to the root of your repository
-    repo_path = "/path/to/repository"
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Convert a repository into a single text file for language model processing"
+    )
+    parser.add_argument("repo_path", help="Path to the repository to process")
+    parser.add_argument(
+        "-o", 
+        "--output", 
+        default="consolidated_repository.txt",
+        help="Output file path (default: consolidated_repository.txt)"
+    )
     
-    # Path to the consolidated output file
-    output_file = "consolidated_repository.txt"
+    args = parser.parse_args()
+    repo_path = Path(args.repo_path).resolve()
     
-    consolidate_files(repo_path, output_file)
+    if not repo_path.is_dir():
+        print(f"Error: {repo_path} is not a valid directory")
+        return
+    
+    print(f"Processing repository: {repo_path}")
+    print(f"Output file: {args.output}")
+    
+    consolidate_files(str(repo_path), args.output)
+    print("Repository consolidation complete!")
