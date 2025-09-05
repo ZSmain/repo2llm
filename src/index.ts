@@ -30,7 +30,10 @@ function parseGitignore(repoPath: string): string[] {
 		'__pycache__',
 		'.pytest_cache',
 		'.DS_Store',
-		'Thumbs.db'
+		'Thumbs.db',
+		'pnpm-lock.yaml',
+		'bun.lock',
+		'yarn.lock',
 	];
 
 	return [...patterns, ...commonExclusions];
@@ -153,7 +156,6 @@ function consolidateFiles(
 		binaryFiles.forEach(filePath => {
 			outputStream.write(`- ${filePath}\n`);
 		});
-		outputStream.write('\nThese files contain non-text content (images, videos, audio, documents, etc.) that cannot be directly processed by language models.\n');
 	}
 
 	outputStream.end();
