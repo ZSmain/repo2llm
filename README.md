@@ -4,10 +4,18 @@ A simple CLI tool to convert a repository into a single text file for language m
 
 ## Installation
 
-You can install repo2llm using the `uv` tool:
+You can install repo2llm using bun:
 
 ```bash
-uv tool install . -e
+bun install -g .
+```
+
+Or for development:
+
+```bash
+bun install
+bun run build
+bun link
 ```
 
 ## Usage
@@ -27,5 +35,7 @@ repo2llm /path/to/repository -o output_file.txt
 ```
 
 By default, repo2llm:
-- Excludes common directories like `.git`, `__pycache__`, etc.
-- Only includes files with common extensions like `.py`, `.js`, `.txt`, `.md`, etc.
+
+- Respects the project's `.gitignore` file and excludes all patterns listed in it
+- Additionally excludes common directories like `.git`, `node_modules`, `.venv`, etc. (even if not in .gitignore)
+- Only includes files with common extensions like `.py`, `.js`, `.ts`, `.txt`, `.md`, etc.

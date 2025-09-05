@@ -1,0 +1,29 @@
+{
+    "name": "repo2llm",
+    "version": "0.1.0",
+    "description": "Convert a repository into a single text file to be fed into a language model",
+    "main": "src/index.ts",
+    "bin": {
+        "repo2llm": "./src/index.ts"
+    },
+    "scripts": {
+        "build": "bun build src/index.ts --outdir dist --target node",
+        "start": "bun run src/index.ts",
+        "dev": "bun run src/index.ts"
+    },
+    "keywords": [
+        "cli",
+        "repository",
+        "llm",
+        "consolidate"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "dependencies": {
+        "commander": "^12.0.0"
+    },
+    "private": true
+}
