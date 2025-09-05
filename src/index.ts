@@ -81,6 +81,18 @@ function consolidateFiles(
 	const gitignorePatterns = parseGitignore(repoPath);
 	const defaultIncludeExtensions = ['.py', '.js', '.ts', '.svelte', '.txt', '.md', '.html', '.css', '.json', '.yml', '.yaml'];
 
+	// Binary/media file extensions that should be excluded
+	const binaryExtensions = [
+		// Images
+		'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', '.svg', '.ico', '.raw',
+		// Videos
+		'.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv', '.m4v',
+		// Audio
+		'.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a',
+		// Documents
+		'.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx'
+	];
+
 	const finalIncludeExtensions = includeExtensions || defaultIncludeExtensions;
 
 	// Generate default filename if not provided
@@ -92,6 +104,7 @@ function consolidateFiles(
 	}
 
 	const outputStream = fs.createWriteStream(finalOutputFile, { encoding: 'utf-8' });
+	const binaryFiles: string[] = [];
 
 	function processDirectory(dirPath: string): void {
 		const items = fs.readdirSync(dirPath);
@@ -109,6 +122,13 @@ function consolidateFiles(
 				// Skip if ignored by gitignore patterns
 				if (!shouldIgnoreFile(fullPath, gitignorePatterns, repoPath, finalOutputFile)) {
 					const ext = path.extname(item);
+
+					// Collect binary/media files for listing (but don't read their content)
+					if (binaryExtensions.includes(ext.toLowerCase())) {
+						binaryFiles.push(fullPath);
+						continue;
+					}
+
 					if (finalIncludeExtensions.includes(ext)) {
 						try {
 							const content = fs.readFileSync(fullPath, 'utf-8');
@@ -125,6 +145,17 @@ function consolidateFiles(
 	}
 
 	processDirectory(repoPath);
+
+	// Add binary/media files section
+	if (binaryFiles.length > 0) {
+		outputStream.write('\n\n## BINARY/MEDIA FILES FOUND\n\n');
+		outputStream.write('The following binary/media files were found in the repository but not included in the content above:\n\n');
+		binaryFiles.forEach(filePath => {
+			outputStream.write(`- ${filePath}\n`);
+		});
+		outputStream.write('\nThese files contain non-text content (images, videos, audio, documents, etc.) that cannot be directly processed by language models.\n');
+	}
+
 	outputStream.end();
 }
 

@@ -42,4 +42,5 @@ By default, repo2llm:
 
 - Respects the project's `.gitignore` file and excludes all patterns listed in it
 - Additionally excludes common directories like `.git`, `node_modules`, `.venv`, etc. (even if not in .gitignore)
+- Automatically excludes binary/media files from content reading, but lists their filenames for reference
 - Only includes files with common extensions like `.py`, `.js`, `.ts`, `.txt`, `.md`, etc.
