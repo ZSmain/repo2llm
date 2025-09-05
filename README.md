@@ -6,16 +6,20 @@ A simple CLI tool to convert a repository into a single text file for language m
 
 You can install repo2llm using bun:
 
+- Compile the project:
+
 ```bash
-bun install -g .
+bun compile
 ```
 
-Or for development:
+- Make it available system-wide on Linux:
 
 ```bash
-bun install
-bun run build
-bun link
+sudo mv repo2llm /usr/local/bin/  # Requires sudo
+
+# Or for user-only:
+mkdir -p ~/.local/bin
+mv repo2llm ~/.local/bin/
 ```
 
 ## Usage

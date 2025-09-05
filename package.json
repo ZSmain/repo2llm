@@ -9,7 +9,8 @@
     "scripts": {
         "build": "bun build src/index.ts --outdir dist --target node",
         "start": "bun run src/index.ts",
-        "dev": "bun run src/index.ts"
+        "dev": "bun run src/index.ts",
+        "compile": "bun build --compile src/index.ts --outfile repo2llm"
     },
     "keywords": [
         "cli",
