@@ -31,9 +31,13 @@ function parseGitignore(repoPath: string): string[] {
 		'.pytest_cache',
 		'.DS_Store',
 		'Thumbs.db',
+		// Lock files
 		'pnpm-lock.yaml',
 		'bun.lock',
 		'yarn.lock',
+		// minified JS and CSS files
+		'*.min.js',
+		'*.min.css',
 	];
 
 	return [...patterns, ...commonExclusions];
